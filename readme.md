@@ -1,38 +1,37 @@
-Ce dossier contient les fichiers Matlab de notre 1er rÃ©seau de neurones Ã  Convolution spÃ©cialisÃ© pour la reconnaissance d'images.
+Ce dossier contient les fichiers Matlab de notre 1er réseau de neurones à  Convolution spécialisé pour la reconnaissance d'images.
 
 ###########################
 ## Constitution d'un CNN ##
 ###########################
 # Couche de convolution
-	- Objectif : DÃ©tecter une forme particuliÃ¨re
+	- Objectif : Détecter une forme particulière
 	- Fichiers : Conv3x3.m
-		     creer_regions.m
-	- Remarque : Conv3x3 est une class qui prend en entrÃ©e une ou des image(s) et un nombre de filtre de la couche deconvolution. Ce nombre correspond au nombre de neurones dans cette couche. En sortie il y autant d'images que le produit (nombre de filtres de la couche * nombre images en entrÃ©e de cette couche de convolution)
+		         creer_regions.m
+	- Remarque : Conv3x3 est une class qui prend en entrée une ou des image(s) et un nombre de filtre de la couche deconvolution. Ce nombre correspond au nombre de neurones dans cette couche. En sortie il y autant d'images que le produit (nombre de filtres de la couche * nombre images en entrée de cette couche de convolution)
 
 # Couche de maxpooling
-	- Objectif : Eviter le surapprentissage en gÃ©nÃ©ralisant la localisation des formes dÃ©tectÃ©es par la couche de convolution prÃ©cÃ©dente
+	- Objectif : Eviter le surapprentissage en généralisant la localisation des formes détectées par la couche de convolution précédente
 	- Fichiers : MaxPool2.m
-		     creer_regions_pooling.m
-	- Remarque : MaxPool2 est une class. Dans cette couche il y autant de neuronnes que dans la couche de convolution prÃ©cÃ©dente. En sortie il y a autant d'images qu'en entrÃ©e.
+		         creer_regions_pooling.m
+	- Remarque : MaxPool2 est une class. Dans cette couche il y autant de neuronnes que dans la couche de convolution précédente. En sortie il y a autant d'images qu'en entrée.
 
 # Couche de softmax
 	- Objectif : Classer les images en leur attribuant un label
 	- Fichiers : Softmax.m
-	- Remarque : C'est une class qui donne en sortie un vecteur donc les valeurs reprÃ©sentent la probabilitÃ© d'appartenir Ã  une classe
+	- Remarque : C'est une class qui donne en sortie un vecteur donc les valeurs représentent la probabilité d'appartenir à  une classe
 
 #####################
 ## Script de test  ##
 #####################
 # Fonction forward
-	- Objectif : Traverser le rÃ©seau CNN de l'entrÃ©e vers la sortie
+	- Objectif : Traverser le réseau CNN de l'entrée vers la sortie
 	- Fichiers : forward_CNN.m
-	- Remarque : C'est une fonction qui dÃ©finit l'architecture du rÃ©seau CNNet donne en sortie le vecteur de sortie de la couche softmax, le loss et un boolean qui reprÃ©sente si la prÃ©diction est juste ou fausse
+	- Remarque : C'est une fonction qui donne en sortie le vecteur de sortie de la couche softmax, le loss et un boolean qui représente si la prédiction est juste ou fausse
 
+# Fonction entrainement
+	- Objectif : Entrainer le réseau CNN pour améliorer ses performances
+	- Fichier  : train_CNN.m
 
-##############
-## Version  ##
-##############
-21:25 30/10/2020 : Correction de cnn_new_v1 et forward_CNN. Un affichage permet maintenant de visualiser la proposition de numÃ©ro pour chaque image.
-hh:mm 31/10/2020 : Ajout de la rÃ©tropropagation dans Softmax, crÃ©ation de la fonction train_CNN et du fichier cnn_new_v3 pour tester le backprop
-22:15 04/11/2020 : Rétropropagation de Softmax fonctionnelle !! + corrections ds divers fichiers
-20:12 10/11/2020 : rÃ©tropropagation de Conv : non fonctionelle ! Ã  corriger
+# Script pour tester le réseau CNN
+	- Objectif : Définir l'architecture du réseau, donner au réseau des images et afficher les résultats de la prédiction du réseau
+	- Fichier  : cnn_new_v3.m
