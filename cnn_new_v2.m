@@ -2,7 +2,6 @@
 ## Script pour tester le réseau CNN sur un ensemble d'images ##
 ###############################################################
 
-%test
 
 pkg load nan
 [train_data, test_data, train_labels, test_labels] = load_mnist();# un peu lourd, charge la base de digits
