@@ -18,7 +18,7 @@ Ce dossier contient les fichiers Matlab de notre 1er réseau de neurones à  Co
 # Couche de softmax
 	- Objectif : Classer les images en leur attribuant un label
 	- Fichiers : Softmax.m
-	- Remarque : C'est une class qui donne en sortie un vecteur donc les valeurs représentent la probabilité d'appartenir à  une classe
+	- Remarque : C'est une class qui donne en sortie un vecteur donc les valeurs représentent la probabilité d'appartenir à une classe
 
 #####################
 ## Script de test  ##
@@ -32,6 +32,10 @@ Ce dossier contient les fichiers Matlab de notre 1er réseau de neurones à  Co
 	- Objectif : Entrainer le réseau CNN pour améliorer ses performances
 	- Fichier  : train_CNN.m
 
-# Script pour tester le réseau CNN
-	- Objectif : Définir l'architecture du réseau, donner au réseau des images et afficher les résultats de la prédiction du réseau
+# Script pour entraîner le réseau CNN
+	- Objectif : Définir l'architecture du réseau, et l'entraîner
 	- Fichier  : cnn_new_v3.m
+	
+# Script pour tester le réseau CNN déjà entraîné
+	- Objectif : Tester les performances du réseau CNN
+	- Fichier  : cnn_new_v2.m
