@@ -2,7 +2,7 @@
 
 [train_data, test_data, train_labels, test_labels] = load_mnist();
 
-N=1334;
+N=8234;
 
 label=train_labels(N);
 label=label+1;  %label entre 1 et 10
@@ -10,6 +10,7 @@ label=label+1;  %label entre 1 et 10
 img=train_data(N,:,:);
 [d,l,L]=size(img);
 img=reshape(img,l,L);
+img = img';
 img=double((img/255.0))-0.5;
 imagesc(img)
 
@@ -17,3 +18,21 @@ tic
 [out,l,acc]=forward_CNN(Conv1,Pool1,Softmax1,img,label)
 toc
 label=label-1 % affiche le vrai label (entre 0 et 9)
+
+out = forward_convolution(Conv1,img);
+for j = 1 : 8
+    figure(2)
+    subplot(2,4,j)
+    imagesc(out(:,:,j)) 
+    title(num2str(j));
+    axis off
+endfor
+
+out = forward_pooling(Pool1,out);
+for j = 1 : 8
+    figure(3)
+    subplot(2,4,j)
+    imagesc(out(:,:,j)) 
+    title(num2str(j));
+    axis off
+endfor
