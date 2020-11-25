@@ -11,7 +11,7 @@ pkg load nan
 
 %%-Images à tester-%%
 offs=1;
-N=100; % nombre d'image à tester (Attention c'est vite très long)
+N=500; % nombre d'image à tester (Attention c'est vite très long)
 tab_label=train_labels(offs:N+offs-1); 
 tab_imgr=train_data(offs:N+offs-1,:,:); % on teste avec N images
 %%-----------------%%

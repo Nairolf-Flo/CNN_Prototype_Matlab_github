@@ -9,7 +9,7 @@ classdef Softmax < handle
     
     test
     
-    learn_rate
+    %learn_rate
     
     %%debug
     dbiais
