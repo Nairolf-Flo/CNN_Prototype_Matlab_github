@@ -38,6 +38,6 @@ function [out,loss,acc] = forward_CNN (Conv,Pool,Softmax,image, label)
     acc=1;
   else 
     acc=0;
-  endif
+  end
   
-endfunction
+end

@@ -36,4 +36,4 @@ function [loss,acc] = train_CNN (Conv,Pool,Softmax,image, label,learn_rate)
   gradient=backprop_pooling(Pool,gradient);
   gradient=backprop_conv(Conv,gradient,learn_rate);
   
-endfunction
+end

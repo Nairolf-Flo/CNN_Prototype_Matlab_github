@@ -42,7 +42,7 @@ for i=1:(N)
 %    fprintf('Pour %d images : Average Loss %d | Predictions justes : %d\n',i,loss/(10*stepdiv10),num_correct)
 %    stepdiv10 = stepdiv10 +1;
 %  endif
-endfor
+end
 fprintf("###-------------------------------------------------------###\n")
 fprintf("Bilan pour les %d images\n",N)
 pourcent_reussite=(num_correct/(N))*100

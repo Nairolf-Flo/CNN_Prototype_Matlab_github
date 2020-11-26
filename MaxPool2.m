@@ -33,7 +33,7 @@ classdef MaxPool2 < handle
   methods
     function obj = MaxPool2()
       obj.last_input = 0;  
-    endfunction
+    end
   
     function output = forward_pooling(obj,image)
       obj.last_input = image;         % Sauvegarde les images en entrée de la couche de MaxPooling
@@ -47,11 +47,11 @@ classdef MaxPool2 < handle
           for yy=1:new_y
             sousreg=image((xx*2)-1:(xx*2),(yy*2)-1:(yy*2),filtre);
             output(xx,yy,filtre) = max(max(sousreg));
-          endfor
-        endfor
-      endfor
+          end
+        end
+      end
       obj.last_output = output;       % Sauvegarde la sortie pour éviter de refaire les calcules en backprop_pooling
-    endfunction
+    end
     %%-Matrice pour tester la class et ses fonctions-%%
     % image(:,:) = [[11,1,1,2,22,2];[1,1,1,2,2,2];[1,1,1,2,2,2];[3,3,3,4,4,4];[3,33,3,4,4,4];[3,3,3,44,4,4]]
     % image(:,:) = [[11,1,2,22];[1,1,2,2];[33,3,44,4];[3,3,4,4]]
@@ -79,14 +79,14 @@ classdef MaxPool2 < handle
                   % Alors ce pixel a eu un impact pour l'évaluation de la class de l'image.
                   % Donc mettons à jour la dL_dinput
                   dL_dinput(xx*2+i,yy*2+j,filtre) = dL_dout(xx+1,yy+1,filtre);
-                endif
-              endfor
-            endfor
-          endfor
-        endfor
-      endfor
+                end
+              end
+            end
+          end
+        end
+      end
       
-    endfunction
+    end
     %%-Script permet de tester backprop_pooling-%%
     % image(:,:) = [[11,1,2,22];[1,1,2,2];[33,3,44,4];[3,3,4,4]]
     % image(:,:,2) = [[5,55,66,6];[5,5,6,6];[7,7,8,8];[77,7,88,8]]

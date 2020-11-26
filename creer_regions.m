@@ -34,8 +34,8 @@ function regions = creer_regions (image)
     for xx=1:(x-2)
       for yy=1:(y-2)
         imregionbis(xx,yy,pp) = image(xx:(xx+2), yy:(yy+2), pp); # Création et enregistrement des régions de taille 3x3 de l'image
-      endfor
-    endfor
-  endfor
+      end
+    end
+  end
   regions=imregionbis;
-endfunction
+end

@@ -15,7 +15,7 @@ classdef Softmax < handle
     dbiais
     dweights
     debug
-  endproperties
+  end
 	
   methods  
 			function obj = Softmax(input_len,nodes)
@@ -26,7 +26,7 @@ classdef Softmax < handle
                                                            % Matrice avec autant de ligne que de pixels en entrée de la couche Softmax et autant de colonne que de classes de sortie
 				obj.biases=zeros(nodes,1);  % Initialisation des biais 
                                       % Vecteur colonne avec autant de lignes que de classes de sortie
-			endfunction
+			end
 			
 			function retval = forward_softmax(obj,inpu)    % inpu c'est la sortie d'une couche de pooling
 				[input_len,nodes]=size(obj.weights);
@@ -46,7 +46,7 @@ classdef Softmax < handle
         obj.last_totals=totals;         %  Sauvgarde dans l'objet l'ancien totals pour rétroprog
 				
 				retval=expto/sum(expto);
-			endfunction
+			end
       
       
       function d_L_d_inputs = backprop_softmax(obj,d_L_d_out,learn_rate)
@@ -55,8 +55,8 @@ classdef Softmax < handle
         for i=1:size(d_L_d_out)
           if d_L_d_out(i)!=0
             break 
-          endif 
-        endfor
+          end
+        end
 %       On arrive à cette ligne uniquement lorsque i cible la valeur de d_L_d_out non nulle
 %       On récupère l'ancien totals du forward softmax
         t_exp=exp(obj.last_totals);
@@ -90,7 +90,7 @@ classdef Softmax < handle
         obj.dweights=obj.weights;
         
         d_L_d_inputs = reshape(d_L_d_inputs,obj.last_input_size);  #on remet en forme car l'entrée à été aplatie lors du forward.
-      endfunction
+      end
       
- endmethods
-endclassdef
+ end
+end

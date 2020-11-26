@@ -62,9 +62,9 @@ for i=1:(N)
     fprintf('Step %d : Past 100 steps: Average Loss %d | Accuracy : %d\n',i, loss/100,num_correct)
     num_correct=0;
     loss=0;
-  endif
+  end
 %%--------------------------------------------------------------%%
-endfor
+end
 
 toc
 

@@ -32,8 +32,8 @@ function res_regions_pooling = creer_regions_pooling (image)
     for xx=1:new_x
       for yy=1:new_y
         imregionbis(xx,yy,filtre) = image((xx*2)-1:(xx*2),(yy*2)-1:(yy*2),filtre); % Création et enregistrement des régions de taille 2x2 de l'image
-      endfor
-    endfor
-  endfor
+      end
+    end
+  end
   res_regions_pooling=imregionbis;
-endfunction
+end

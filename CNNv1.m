@@ -79,7 +79,7 @@ for j = 1 : Conv1.nombre_filtres
     imagesc(reshapeImage);
     title(num2str(j));
     axis off
-endfor
+end
 
 #######################################
 ## 2 Couche de Convolution + Pooling ##
@@ -111,7 +111,7 @@ for j = 1 : Conv2.nombre_filtres*Conv1.nombre_filtres
     imagesc(reshapeImage);
     title(num2str(j));
     axis off
-endfor
+end
 
 #######################################
 ## 3 Couche de Convolution + Pooling ##

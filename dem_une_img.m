@@ -26,7 +26,7 @@ for j = 1 : 8
     imagesc(out(:,:,j)) 
     title(num2str(j));
     axis off
-endfor
+end
 
 out = forward_pooling(Pool1,out);
 for j = 1 : 8
@@ -35,4 +35,4 @@ for j = 1 : 8
     imagesc(out(:,:,j)) 
     title(num2str(j));
     axis off
-endfor
+end
