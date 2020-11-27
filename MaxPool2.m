@@ -63,22 +63,22 @@ classdef MaxPool2 < handle
     function dL_dinput = backprop_pooling(obj,dL_dout)
       [x,y,nb_filtres] = size(obj.last_input);
       dL_dinput = zeros(x,y,nb_filtres);                 % Initialisation de la sortie de la backprop_pooling
-      imregion = creer_regions_pooling(obj.last_input); % Création d'une matrice de sous régions 2x2 de la last_input
-      [im_x,im_y,im_f] = size(imregion);
+      new_x = fix(x/2);
+      new_y = fix(y/2);
       
       % Parcourir les sous régions
-      for filtre=1:im_f
-        for xx=0:im_x-1
-          for yy=0:im_y-1
-            amax = obj.last_output(xx+1,yy+1,filtre);
-            for i=1:2
-              for j=1:2
+      for filtre=1:nb_filtres
+        for xx=1:new_x
+          for yy=1:new_y
+            amax = obj.last_output(xx,yy,filtre);
+            for i=0:1
+              for j=0:1
                 % on compare cette sortie précédente à la valeur des pixels qui ont permis de créer la sous région
-                if obj.last_input(xx*2+i,yy*2+j,filtre) == amax
+                if obj.last_input(xx*2-i,yy*2-j,filtre) == amax
                   % Si la valeur du pixel de l'image qui a permis de calculer la sortie précédente, était un maximum dans sa sous région,
                   % Alors ce pixel a eu un impact pour l'évaluation de la class de l'image.
                   % Donc mettons à jour la dL_dinput
-                  dL_dinput(xx*2+i,yy*2+j,filtre) = dL_dout(xx+1,yy+1,filtre);
+                  dL_dinput(xx*2-i,yy*2-j,filtre) = dL_dout(xx,yy,filtre);
                 end
               end
             end

@@ -7,14 +7,6 @@ classdef Softmax < handle
     last_input
     last_totals
     
-    test
-    
-    %learn_rate
-    
-    %%debug
-    dbiais
-    dweights
-    debug
   end
 	
   methods  
@@ -32,8 +24,7 @@ classdef Softmax < handle
 				[input_len,nodes]=size(obj.weights);
         flatinput=reshape(inpu,prod(size(inpu)),1); % Transforme inpu en vecteur colonne avec prod(size(inpu)) lignes
                                                        % prod(size(inpu)) = produit des dimensions de inpu par exemple 13*13*8
-        %obj.test=zeros(7);
-        %obj.test=inpu;
+
         
         totals=obj.weights' * flatinput + obj.biases;
         expto=exp(totals);
@@ -81,13 +72,9 @@ classdef Softmax < handle
         d_L_d_b = d_L_d_t * d_t_d_b;
         d_L_d_inputs = d_t_d_inputs * d_L_d_t;
         
-         obj.debug=d_L_d_w;
-        
 %       Update weights / biases
         obj.weights = obj.weights - learn_rate * d_L_d_w;
         obj.biases =  obj.biases - learn_rate * d_L_d_b;
-        obj.dbiais=obj.biases;
-        obj.dweights=obj.weights;
         
         d_L_d_inputs = reshape(d_L_d_inputs,obj.last_input_size);  #on remet en forme car l'entrée à été aplatie lors du forward.
       end
