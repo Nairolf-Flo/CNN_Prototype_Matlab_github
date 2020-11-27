@@ -11,7 +11,7 @@ pkg load nan
 
 %%-Images à tester-%%
 offs=1;
-N=500; % nombre d'image à tester (Attention c'est vite très long)
+N=1000; % nombre d'image à tester (Attention c'est vite très long)
 tab_label=train_labels(offs:N+offs-1); 
 tab_imgr=train_data(offs:N+offs-1,:,:); % on teste avec N images
 %%-----------------%%
@@ -32,10 +32,7 @@ num_correct=0;
 loss=0;
 
 %%-Initialisation pour des graphiques-%%
-%debug biais
 m=1:(N+offs-1);
-%p=zeros(N-offs,10);
-%q=zeros(N-offs,50);
 r=zeros(N-offs,3,3);
 %%------------------------------------%%
 
@@ -49,11 +46,6 @@ for i=1:(N)
   [l,acc]=train_CNN(Conv1,Pool1,Softmax1,imgn,label,learn_rate);   % Entrainement du réseau
   num_correct=num_correct+acc;
   loss=loss+l;
-  
-%  b=Softmax1.dbiais;
-%  w=Softmax1.dweights(501:550,6);
-%  p(i,:)=b;
-%  q(i,:)=w;
   
   r(i,:,:)=Conv1.filtres(:,:,4); % Enregistre les poids du filtre numero 4
  

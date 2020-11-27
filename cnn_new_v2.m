@@ -12,7 +12,7 @@ pkg load nan
 
 %%-Images à tester-%%
 offs=1002;
-N=100; % nombre d'image à tester (Attention c'est vite très long)
+N=1000; % nombre d'image à tester (Attention c'est vite très long)
 tab_label=train_labels(offs:N+offs-1); 
 tab_imgr=train_data(offs:N+offs-1,:,:); % on teste avec N images
 %%-----------------%%
@@ -21,7 +21,7 @@ tab_imgr=train_data(offs:N+offs-1,:,:); % on teste avec N images
 
 num_correct=0;
 loss=0;
-
+tic
 %stepdiv10 = 1;
 for i=1:(N)
   label=tab_label(i);
@@ -30,9 +30,9 @@ for i=1:(N)
   [d,l,L]=size(imgr);
   img=reshape(imgr,l,L);
   imgn=double((img/255.0))-0.5;
-  tic
+  
   [out,l,acc]=forward_CNN(Conv1,Pool1,Softmax1,imgn,label);   % un passage forward sur une image
-  toc
+
   num_correct=num_correct+acc;
   loss=loss+l;
   
@@ -43,6 +43,7 @@ for i=1:(N)
 %    stepdiv10 = stepdiv10 +1;
 %  endif
 end
+toc
 fprintf("###-------------------------------------------------------###\n")
 fprintf("Bilan pour les %d images\n",N)
 pourcent_reussite=(num_correct/(N))*100

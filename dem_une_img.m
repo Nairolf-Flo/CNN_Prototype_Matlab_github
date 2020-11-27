@@ -7,12 +7,17 @@ N=8234;
 label=train_labels(N);
 label=label+1;  %label entre 1 et 10
 
+%img1=imread('img_test.jpg','jpg');  %image de test
+%imagesc(img1)
+%img1=img1';
+
 img=train_data(N,:,:);
 [d,l,L]=size(img);
 img=reshape(img,l,L);
-img = img';
+imgs = img';
+imagesc(imgs)
 img=double((img/255.0))-0.5;
-imagesc(img)
+
 
 tic
 [out,l,acc]=forward_CNN(Conv1,Pool1,Softmax1,img,label)
