@@ -1,3 +1,5 @@
+% fichier devenu inutile
+
 mnistfilenames = cell(4,1);
 mnistfilenames{1} = "train-images-idx3-ubyte";
 mnistfilenames{2} = "train-labels-idx1-ubyte";
