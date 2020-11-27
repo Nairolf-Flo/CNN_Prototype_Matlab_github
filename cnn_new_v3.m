@@ -1,9 +1,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Script pour entraîner le réseau CNN sur un ensemble d'images %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-pkg load nan
-[train_data, test_data, train_labels, test_labels] = load_mnist();% un peu lourd, charge la base de digits
+tic
+mnistfilenames = cell(4,1);
+mnistfilenames{1} = "train-images-idx3-ubyte";
+mnistfilenames{2} = "train-labels-idx1-ubyte";
+mnistfilenames{3} = "t10k-images-idx3-ubyte";
+mnistfilenames{4} = "t10k-labels-idx1-ubyte";
+[train_data train_labels test_data test_labels]=mnistread(mnistfilenames);
+toc
 
 %    img1=imread('im_test.jpg','jpg');  %image de test
 %    img2=imread('ensil.jpg','jpg');    %image de test

@@ -13,11 +13,11 @@ TrainLabels = mnistlabelread( mnistfilenames{2} );
 TestImages = mnistimageread( mnistfilenames{3} );
 TestLabels = mnistlabelread( mnistfilenames{4} );
 
-TrainImages = single(TrainImages)/255.0;
-TestImages = single(TestImages)/255.0;
+%TrainLabels = single(TrainLabels);
+%TestLabels = single(TestLabels);
 
-TrainLabels = single(TrainLabels);
-TestLabels = single(TestLabels);
+TrainImages=reshape(TrainImages,60000,28,28); % reshape des données lues dans le fichier binaire
+TestImages=reshape(TestImages,10000,28,28);
 
 end
 
@@ -43,6 +43,7 @@ function images = mnistimageread( imagefile )
     end
 end
 
+
 function labels = mnistlabelread( labelfile )
     fid = fopen( labelfile, 'rb');
     magic = fread(fid, 1, '*int32',0,'b');
@@ -56,11 +57,12 @@ function labels = mnistlabelread( labelfile )
         return;
     end
     
-    labels = zeros( nlabels, 10 );
-    ind = ind + 1;
+    labels = zeros(nlabels,1);
     for i=1:nlabels
-        labels(i, ind(i)) = 1;
+        labels(i) = ind(i);
     end
 end
+
+
 
 
