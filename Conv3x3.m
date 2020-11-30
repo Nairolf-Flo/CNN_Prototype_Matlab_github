@@ -33,10 +33,16 @@ classdef Conv3x3 < handle
   methods
     
     %% Création d'une matrice avec les nb_filtres filtres
-    function obj=Conv3x3(nb_filtres)
+    function obj=Conv3x3(nb_filtres,bool)
       obj.nombre_filtres=nb_filtres;
-      obj.filtres=randn([3,3,nb_filtres])./9;
+      if bool==true
+        obj.filtres=randn([3,3,nb_filtres])./9;
+      else
+        load Conv1_Filtres.mat;
+        obj.filtres=Conv1_Filtres;
+      end
     end
+    
     
     function resultat_convolution=forward_convolution(obj,image)
       [h,l,p]=size(image);

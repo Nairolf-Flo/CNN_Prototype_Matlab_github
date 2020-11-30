@@ -2,21 +2,41 @@
 %% Script pour tester le réseau CNN sur un ensemble d'images %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+tic
+mnistfilenames = cell(4,1);
+mnistfilenames{1} = "train-images-idx3-ubyte";
+mnistfilenames{2} = "train-labels-idx1-ubyte";
+mnistfilenames{3} = "t10k-images-idx3-ubyte";
+mnistfilenames{4} = "t10k-labels-idx1-ubyte";
+[train_data train_labels test_data test_labels]=mnistread(mnistfilenames);
+toc
 
-pkg load nan
-[train_data, test_data, train_labels, test_labels] = load_mnist();% un peu lourd, charge la base de digits
+%pkg load nan
+%[train_data, test_data, train_labels, test_labels] = load_mnist();% un peu lourd, charge la base de digits
 
 %%    img1=imread('im_test.jpg','jpg');  %image de test
 %%    img2=imread('ensil.jpg','jpg');    %image de test
 %%    img3=imread('ensilr2.jpg','jpg');  %image de test
 
 %%-Images à tester-%%
-offs=1002;
-N=1000; % nombre d'image à tester (Attention c'est vite très long)
+offs=1;
+N=100; % nombre d'image à tester (Attention c'est vite très long)
 tab_label=train_labels(offs:N+offs-1); 
 tab_imgr=train_data(offs:N+offs-1,:,:); % on teste avec N images
 %%-----------------%%
 
+load Conv1_Filtres.mat;
+load Softmax1_weights.mat;
+load Softmax1_biases.mat;
+
+%%-Initialisation du réseau-%%
+Conv1 = Conv3x3(size(Conv1_Filtres)(3),false);
+Pool1 = MaxPool2();
+Softmax1 = Softmax(size(Softmax1_weights)(1),size(Softmax1_weights)(2),false);
+%%--------------------------%%
+
+
+fprintf("Start\n")
 
 
 num_correct=0;
@@ -30,13 +50,11 @@ for i=1:(N)
   [d,l,L]=size(imgr);
   img=reshape(imgr,l,L);
   imgn=double((img/255.0))-0.5;
-  
-  [out,l,acc]=forward_CNN(Conv1,Pool1,Softmax1,imgn,label);   % un passage forward sur une image
-
+  [out,l,acc]=forward_CNN(Conv1,Pool1,Softmax1,imgn,label);
   num_correct=num_correct+acc;
   loss=loss+l;
-  
-%  fprintf('Proposition : %d <:::> Label : %d <:::> %d\n', find(out==max(out)),label,acc)
+ 
+  fprintf('Proposition : %d <:::> Label : %d <:::> %d\n', find(out==max(out)),label,acc)
   
 %  if rem(i,10)==0  %reste de la division par 10
 %    fprintf('Pour %d images : Average Loss %d | Predictions justes : %d\n',i,loss/(10*stepdiv10),num_correct)

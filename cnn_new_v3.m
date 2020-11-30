@@ -16,7 +16,7 @@ toc
 
 %%-Images à tester-%%
 offs=1;
-N=1000; % nombre d'image à tester (Attention c'est vite très long)
+N=400; % nombre d'image à tester (Attention c'est vite très long)
 tab_label=train_labels(offs:N+offs-1); 
 tab_imgr=train_data(offs:N+offs-1,:,:); % on teste avec N images
 %%-----------------%%
@@ -24,11 +24,10 @@ tab_imgr=train_data(offs:N+offs-1,:,:); % on teste avec N images
 learn_rate=0.005; % Taux d'apprentissage
 
 %%-Initialisation des différentes couches du réseau CNN-%%
-Conv1 = Conv3x3(8);             % Couche de convolution à 8 filtres 28x28x1 -> 26x26x8
-Pool1 = MaxPool2();             % Couche de Maxpooling              28x28x1 -> 26x26x8
-Softmax1 = Softmax(13*13*8,10); % Couche de Softmax                 13x13x8 -> 10
+Conv1 = Conv3x3(8,true);             % Couche de convolution à 8 filtres 28x28x1 -> 26x26x8
+Pool1 = MaxPool2();                  % Couche de Maxpooling              26x26x1 -> 13x13x8
+Softmax1 = Softmax(13*13*8,10,true); % Couche de Softmax                 13x13x8 -> 10
 %%------------------------------------------------------%%
-
 
 
 tic
@@ -64,6 +63,17 @@ for i=1:(N)
 end
 
 toc
+
+Conv1_Filtres =  Conv1.filtres;
+Softmax1_weights = Softmax1.weights;
+Softmax1_biases  = Softmax1.biases;
+
+%%-Enregistre le réseau entrainé dans un fichier-%%
+save Conv1_Filtres.mat Conv1_Filtres;
+save Softmax1_weights.mat Softmax1_weights;
+save Softmax1_biases.mat Softmax1_biases;
+%%-----------------------------------------------%%
+
 
 %%-Affichage de graphiques-%%
 %figure(1)
