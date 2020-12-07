@@ -16,7 +16,7 @@ toc
 
 %%-Images à tester-%%
 offs=1;
-N=400; % nombre d'image à tester (Attention c'est vite très long)
+N=1000; % nombre d'image à tester (Attention c'est vite très long)
 tab_label=train_labels(offs:N+offs-1); 
 tab_imgr=train_data(offs:N+offs-1,:,:); % on teste avec N images
 %%-----------------%%
@@ -36,8 +36,10 @@ num_correct=0;
 loss=0;
 
 %%-Initialisation pour des graphiques-%%
-m=1:(N+offs-1);
 r=zeros(N-offs,3,3);
+q=zeros((N-offs+1)/100,1);
+a=zeros((N-offs+1)/100,1);
+
 %%------------------------------------%%
 
 for i=1:(N)
@@ -51,13 +53,19 @@ for i=1:(N)
   num_correct=num_correct+acc;
   loss=loss+l;
   
+  
   r(i,:,:)=Conv1.filtres(:,:,4); % Enregistre les poids du filtre numero 4
  
 %%-Après 100 image afficher des information sur l'apprentissage-%%
   if rem(i,100)==0  
     fprintf('Step %d : Past 100 steps: Average Loss %d | Accuracy : %d\n',i, loss/100,num_correct)
+    
+    q(i/100,:)=double(loss/100); %Enregistre le loss moyen sur 100 images
+    a(i/100,:)=num_correct;      %Enregistre le taux de succès sur 100 images
+    
     num_correct=0;
     loss=0;
+    
   end
 %%--------------------------------------------------------------%%
 end
@@ -75,16 +83,14 @@ save Softmax1_biases.mat Softmax1_biases;
 %%-----------------------------------------------%%
 
 
-%%-Affichage de graphiques-%%
-%figure(1)
-%title("biais")
-%plot(m,p)
-%figure(2)
-%title("weights")
-%plot(m,q)
-
 figure(3)
 title ("filtres")
 r=reshape(r,N+offs-1,9);
-plot(m,r)
+plot(r)
+
+figure(4)
+title("loss and taux de succès")               
+plot(q,'r')
+yyaxis right
+plot(a,'b')
 %%-------------------------%%
