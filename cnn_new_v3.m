@@ -7,16 +7,12 @@ mnistfilenames{1} = "train-images-idx3-ubyte";
 mnistfilenames{2} = "train-labels-idx1-ubyte";
 mnistfilenames{3} = "t10k-images-idx3-ubyte";
 mnistfilenames{4} = "t10k-labels-idx1-ubyte";
-[train_data train_labels test_data test_labels]=mnistread(mnistfilenames);
+[train_data ,train_labels, test_data, test_labels]=mnistread(mnistfilenames);
 toc
-
-%    img1=imread('im_test.jpg','jpg');  %image de test
-%    img2=imread('ensil.jpg','jpg');    %image de test
-%    img3=imread('ensilr2.jpg','jpg');  %image de test
 
 %%-Images à tester-%%
 offs=1;
-N=1000; % nombre d'image à tester (Attention c'est vite très long)
+N=60000; % nombre d'image à tester (Attention c'est vite très long)
 tab_label=train_labels(offs:N+offs-1); 
 tab_imgr=train_data(offs:N+offs-1,:,:); % on teste avec N images
 %%-----------------%%

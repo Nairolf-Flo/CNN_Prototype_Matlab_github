@@ -8,7 +8,7 @@ mnistfilenames{1} = "train-images-idx3-ubyte";
 mnistfilenames{2} = "train-labels-idx1-ubyte";
 mnistfilenames{3} = "t10k-images-idx3-ubyte";
 mnistfilenames{4} = "t10k-labels-idx1-ubyte";
-[train_data train_labels test_data test_labels]=mnistread(mnistfilenames);
+[train_data, train_labels, test_data, test_labels]=mnistread(mnistfilenames);
 toc
 
 %pkg load nan
@@ -20,19 +20,29 @@ toc
 
 %%-Images à tester-%%
 offs=1;
-N=100; % nombre d'image à tester (Attention c'est vite très long)
+N=1000; % nombre d'image à tester (Attention c'est vite très long)
 tab_label=train_labels(offs:N+offs-1); 
 tab_imgr=train_data(offs:N+offs-1,:,:); % on teste avec N images
 %%-----------------%%
 
-load Conv1_Filtres.mat;
-load Softmax1_weights.mat;
-load Softmax1_biases.mat;
+load Conv1_Filtres_60k.mat; %Entraînement sur 60000 images
+load Softmax1_weights_60k.mat;
+load Softmax1_biases_60k.mat;
+
+% load Conv1_Filtres.mat;   %Entraînement selon cnn_new_v3 
+% load Softmax1_weights.mat;
+% load Softmax1_biases.mat;
 
 %%-Initialisation du réseau-%%
-Conv1 = Conv3x3(size(Conv1_Filtres)(3),false);
+taille_filtres=size(Conv1_Filtres);
+taille_weigts=size(Softmax1_weights)
+Conv1 = Conv3x3(taille_filtres(3),false);
 Pool1 = MaxPool2();
-Softmax1 = Softmax(size(Softmax1_weights)(1),size(Softmax1_weights)(2),false);
+Softmax1 = Softmax(taille_weigts(1),taille_weigts(2),false);
+
+Conv1.filtres=Conv1_Filtres_60k;
+Softmax1.weights=Softmax1_weights_60k;
+Softmax1.biases=Softmax1_biases_60k;
 %%--------------------------%%
 
 
