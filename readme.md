@@ -1,8 +1,8 @@
 Ce dossier contient les fichiers Matlab de notre 1er réseau de neurones à  Convolution spécialisé pour la reconnaissance d'images.
 
-###########################
+
 ## Constitution d'un CNN ##
-###########################
+
 # Couche de convolution
 	- Objectif : Détecter une forme particulière
 	- Fichiers : Conv3x3.m
@@ -20,16 +20,16 @@ Ce dossier contient les fichiers Matlab de notre 1er réseau de neurones à  Co
 	- Fichiers : Softmax.m
 	- Remarque : C'est une class qui donne en sortie un vecteur donc les valeurs représentent la probabilité d'appartenir à une classe
 
-#####################
+
 ## Script de test  ##
-#####################
+
 # Fonction forward
 	- Objectif : Traverser le réseau CNN de l'entrée vers la sortie
 	- Fichiers : forward_CNN.m
 	- Remarque : C'est une fonction qui donne en sortie le vecteur de sortie de la couche softmax, le loss et un boolean qui représente si la prédiction est juste ou fausse
 
 # Fonction entrainement
-	- Objectif : Entrainer le réseau CNN pour améliorer ses performances
+	- Objectif : Entraîner le réseau CNN pour améliorer ses performances
 	- Fichier  : train_CNN.m
 
 # Script pour entraîner le réseau CNN
@@ -39,3 +39,11 @@ Ce dossier contient les fichiers Matlab de notre 1er réseau de neurones à  Co
 # Script pour tester le réseau CNN déjà entraîné
 	- Objectif : Tester les performances du réseau CNN
 	- Fichier  : cnn_new_v2.m
+	
+# Script pour afficher sous forme d'images une représentation graphique de la vision de l'ordinateur
+	- Objectif : Afficher le résultat des opérations réalisées dans les couches de Convolution et de Maxpooling
+	- Fichier  : dem_une_img.m
+	
+# Script pour utiliser un réseau entraîné sur le Raspberry Pi
+	- Objectif : Reconnaître des chiffres sur des photos de la camera du Raspberry Pi
+	- Fichier  : RaspberryPi_Use_CNN.m
