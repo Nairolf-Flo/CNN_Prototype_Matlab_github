@@ -6,7 +6,7 @@ mnistfilenames{1} = "train-images-idx3-ubyte";
 mnistfilenames{2} = "train-labels-idx1-ubyte";
 mnistfilenames{3} = "t10k-images-idx3-ubyte";
 mnistfilenames{4} = "t10k-labels-idx1-ubyte";
-[train_data train_labels test_data test_labels]=mnistread(mnistfilenames);
+[train_data ,train_labels, test_data, test_labels]=mnistread(mnistfilenames);
 toc
 
 %pkg load nan
@@ -16,16 +16,24 @@ toc
 %%    img2=imread('ensil.jpg','jpg');    %image de test
 %%    img3=imread('ensilr2.jpg','jpg');  %image de test
 
+load Conv1_Filtres_60k.mat; %Entraînement sur 60000 images
+load Softmax1_weights_60k.mat;
+load Softmax1_biases_60k.mat;
 
-load Conv1_Filtres.mat;
-load Softmax1_weights.mat;
-load Softmax1_biases.mat;
+% load Conv1_Filtres.mat;   %Entraînement selon cnn_new_v3 
+% load Softmax1_weights.mat;
+% load Softmax1_biases.mat;
 
 %%-Initialisation du réseau-%%
-Conv1 = Conv3x3(size(Conv1_Filtres)(3),false);
+taille_filtres=size(Conv1_Filtres);
+taille_weigts=size(Softmax1_weights);
+Conv1 = Conv3x3(taille_filtres(3),false);
 Pool1 = MaxPool2();
-Softmax1 = Softmax(size(Softmax1_weights)(1),size(Softmax1_weights)(2),false);
-%%--------------------------%%
+Softmax1 = Softmax(taille_weigts(1),taille_weigts(2),false);
+
+Conv1.filtres=Conv1_Filtres;
+Softmax1.weights=Softmax1_weights;
+Softmax1.biases=Softmax1_biases;%%--------------------------%%
 
 fprintf("Start\n")
 
@@ -55,6 +63,7 @@ label=label-1 % affiche le vrai label (entre 0 et 9)
 out = forward_convolution(Conv1,img);
 for j = 1 : 8
     figure(2)
+    title("Convolution")
     subplot(2,4,j)
     imagesc(out(:,:,j)) 
     title(num2str(j));
@@ -64,8 +73,18 @@ end
 out = forward_pooling(Pool1,out);
 for j = 1 : 8
     figure(3)
+    title("Pooling")
     subplot(2,4,j)
     imagesc(out(:,:,j)) 
+    title(num2str(j));
+    axis off
+end
+
+for j = 1 : 8
+    figure(4)
+    title("Filtres")
+    subplot(2,4,j)
+    imagesc(Conv1.filtres(:,:,j)) 
     title(num2str(j));
     axis off
 end

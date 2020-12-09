@@ -35,14 +35,14 @@ load Softmax1_biases_60k.mat;
 
 %%-Initialisation du réseau-%%
 taille_filtres=size(Conv1_Filtres);
-taille_weigts=size(Softmax1_weights)
+taille_weigts=size(Softmax1_weights);
 Conv1 = Conv3x3(taille_filtres(3),false);
 Pool1 = MaxPool2();
 Softmax1 = Softmax(taille_weigts(1),taille_weigts(2),false);
 
-Conv1.filtres=Conv1_Filtres_60k;
-Softmax1.weights=Softmax1_weights_60k;
-Softmax1.biases=Softmax1_biases_60k;
+Conv1.filtres=Conv1_Filtres;
+Softmax1.weights=Softmax1_weights;
+Softmax1.biases=Softmax1_biases;
 %%--------------------------%%
 
 
