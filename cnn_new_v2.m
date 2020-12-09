@@ -40,9 +40,6 @@ Conv1 = Conv3x3(taille_filtres(3),false);
 Pool1 = MaxPool2();
 Softmax1 = Softmax(taille_weigts(1),taille_weigts(2),false);
 
-Conv1.filtres=Conv1_Filtres;
-Softmax1.weights=Softmax1_weights;
-Softmax1.biases=Softmax1_biases;
 %%--------------------------%%
 
 
