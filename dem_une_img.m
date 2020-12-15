@@ -16,13 +16,13 @@ toc
 %%    img2=imread('ensil.jpg','jpg');    %image de test
 %%    img3=imread('ensilr2.jpg','jpg');  %image de test
 
-load Conv1_Filtres_60k.mat; %Entraînement sur 60000 images
-load Softmax1_weights_60k.mat;
-load Softmax1_biases_60k.mat;
+% load Conv1_Filtres_60k.mat; %Entraînement sur 60000 images
+% load Softmax1_weights_60k.mat;
+% load Softmax1_biases_60k.mat;
 
-% load Conv1_Filtres.mat;   %Entraînement selon cnn_new_v3 
-% load Softmax1_weights.mat;
-% load Softmax1_biases.mat;
+load Conv1_Filtres.mat;   %Entraînement selon cnn_new_v3 
+load Softmax1_weights.mat;
+load Softmax1_biases.mat;
 
 %%-Initialisation du réseau-%%
 taille_filtres=size(Conv1_Filtres);
@@ -36,7 +36,7 @@ Softmax1 = Softmax(taille_weigts(1),taille_weigts(2),false);
 fprintf("Start\n")
 
 
-N=1232;
+N=1234;
 
 label=train_labels(N);
 label=label+1;  %label entre 1 et 10
@@ -59,30 +59,39 @@ toc
 label=label-1 % affiche le vrai label (entre 0 et 9)
 
 out = forward_convolution(Conv1,img);
-for j = 1 : 8
+for j = 1 : 4
     figure(2)
     title("Convolution")
-    subplot(2,4,j)
+    subplot(2,2,j)
     imagesc(out(:,:,j)) 
-    title(num2str(j));
+    top=max(max(max(out)));
+    bottom=min(min(min(out)));
+    caxis manual
+    caxis([bottom top]);
     axis off
 end
 
 out = forward_pooling(Pool1,out);
-for j = 1 : 8
+for j = 1 : 4
     figure(3)
     title("Pooling")
-    subplot(2,4,j)
+    subplot(2,2,j)
     imagesc(out(:,:,j)) 
-    title(num2str(j));
+    top=max(max(max(out)));
+    bottom=min(min(min(out)));
+    caxis manual
+    caxis([bottom top]);
     axis off
 end
 
-for j = 1 : 8
+for j = 1 : 4
     figure(4)
     title("Filtres")
-    subplot(2,4,j)
+    subplot(2,2,j)
     imagesc(Conv1.filtres(:,:,j)) 
-    title(num2str(j));
+    top=max(max(max(Conv1.filtres)));
+    bottom=min(min(min(Conv1.filtres)));
+    caxis manual
+    caxis([bottom top]);
     axis off
 end
