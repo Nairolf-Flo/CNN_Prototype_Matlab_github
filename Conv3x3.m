@@ -38,7 +38,7 @@ classdef Conv3x3 < handle
       if bool==true
         obj.filtres=randn([3,3,nb_filtres])./9;
       else
-        load Conv1_Filtres.mat;
+        load Conv1_FiltresV3.mat;
         obj.filtres=Conv1_Filtres;
       end
     end

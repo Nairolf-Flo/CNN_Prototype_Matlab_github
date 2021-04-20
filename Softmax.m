@@ -21,8 +21,8 @@ classdef Softmax < handle
                                         % Vecteur colonne avec autant de lignes que de classes de sortie
         else
           %%-Charge les fichiers qui contiennent le réseaux entrainé-%%
-          load Softmax1_weights.mat;
-          load Softmax1_biases.mat;
+          load Softmax1_weightsV3.mat;
+          load Softmax1_biasesV3.mat;
           %%---------------------------------------------------------%%
           %%-Initialisation de la couche Softmax avec ces fichiers-%%
           obj.weights=Softmax1_weights;

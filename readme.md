@@ -20,22 +20,26 @@ Ce dossier contient les fichiers Matlab de notre 1er réseau de neurones à  Co
 	- Fichiers : Softmax.m
 	- Remarque : C'est une class qui donne en sortie un vecteur donc les valeurs représentent la probabilité d'appartenir à une classe
 
-#####################
-## Script de test  ##
-#####################
+######################
+## Script de tests  ##
+######################
 # Fonction forward
-	- Objectif : Traverser le réseau CNN de l'entrée vers la sortie
+	- Objectif : Obtenir une prédiction du chiffre d'une image.
 	- Fichiers : forward_CNN.m
 	- Remarque : C'est une fonction qui donne en sortie le vecteur de sortie de la couche softmax, le loss et un boolean qui représente si la prédiction est juste ou fausse
 
 # Fonction entrainement
-	- Objectif : Entrainer le réseau CNN pour améliorer ses performances
+	- Objectif : Entrainer le réseau CNN pour améliorer ses performances.
 	- Fichier  : train_CNN.m
 
 # Script pour entraîner le réseau CNN
-	- Objectif : Définir l'architecture du réseau, et l'entraîner
+	- Objectif : Définir l'architecture du réseau, et l'entraîner.
 	- Fichier  : cnn_new_v3.m
 	
 # Script pour tester le réseau CNN déjà entraîné
-	- Objectif : Tester les performances du réseau CNN
-	- Fichier  : cnn_new_v2.m
+	- Objectif : Tester les performances du réseau CNN.
+	- Fichier  : utiliser_le_prototype.m
+
+# Script pour afficher divers graphiques
+	- Objectif : Obtenir des graphiques de l'évolutions du taux de succès et du loss. Obtenir une visualisation graphique des résultats des neurones.
+	- Fichier  : afficher_des_graphiques.m
