@@ -23,35 +23,49 @@
 %% Author: flori <flori@LAPTOP-BLEU>
 %% Created: 2020-10-25
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Classe de la couche de Max Pooling %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 classdef MaxPool2 < handle
+	properties (SetAccess = public, GetAccess = public)
+		last_input;
+		last_output;
+	end
   
-  properties (SetAccess = public, GetAccess = public)
-    last_input;
-    last_output; % A voir il faut faire un compromis entre la mémoire et le temps calcul
-  end
-  
-  methods
-    function obj = MaxPool2()
+	methods
+%%-Initialise la couche de Max Pooling-%%
+	function obj = MaxPool2()
       obj.last_input = 0;  
     end
-  
+%%-------------------------------------%%
+
+%%-Max-Pooling sur la sortie de la couche de convolution-%%
     function output = forward_pooling(obj,image)
-      obj.last_input = image;         % Sauvegarde les images en entrée de la couche de MaxPooling
-      [x,y,nb_filtres] = size(image); % Récupération de la taille des images et du nombre d'images=nb_filtres
-      new_x = fix(x/2);
-      new_y = fix(y/2);
-      output = zeros(new_x, new_y, nb_filtres); % Initialisation de la sortie de la couche MaxPooling
+	  % Sauvegarde l'entrée de la couche de MaxPooling
+	  obj.last_input = image;
+	  % Récupération du nombre et de la taille des images
+	  [x,y,nb_filtres] = size(image);
+	  new_x = fix(x/2);
+	  new_y = fix(y/2);
+	  % Initialise la sortie de la couche MaxPooling
+	  output = zeros(new_x, new_y, nb_filtres);
       
-      for filtre=1:nb_filtres
-        for xx=1:new_x
-          for yy=1:new_y
-            sousreg=image((xx*2)-1:(xx*2),(yy*2)-1:(yy*2),filtre);
-            output(xx,yy,filtre) = max(max(sousreg));
-          end
-        end
-      end
-      obj.last_output = output;       % Sauvegarde la sortie pour éviter de refaire les calcules en backprop_pooling
+	  for filtre=1:nb_filtres
+	    for xx=1:new_x
+	   	  for yy=1:new_y
+		    % Isole une région 2x2
+		    sousreg=image((xx*2)-1:(xx*2),(yy*2)-1:(yy*2),filtre);
+		    % Max-Pooling sur la région 2x2
+		    output(xx,yy,filtre) = max(max(sousreg));
+		  end
+	    end
+	  end
+	  % Sauvegarde la sortie pour la backprop_pooling
+	  obj.last_output = output;
     end
+%%-------------------------------------------------------%%
+	
     %%-Matrice pour tester la class et ses fonctions-%%
     % image(:,:) = [[11,1,1,2,22,2];[1,1,1,2,2,2];[1,1,1,2,2,2];[3,3,3,4,4,4];[3,33,3,4,4,4];[3,3,3,44,4,4]]
     % image(:,:) = [[11,1,2,22];[1,1,2,2];[33,3,44,4];[3,3,4,4]]
@@ -60,9 +74,10 @@ classdef MaxPool2 < handle
     % imregion=creer_regions_pooling(image)
     %%------------------------------------------------%%
     
+%%-Rétropropagation du gradient du loss dans la couche de Max-Pooling-%%
     function dL_dinput = backprop_pooling(obj,dL_dout)
       [x,y,nb_filtres] = size(obj.last_input);
-      dL_dinput = zeros(x,y,nb_filtres);                 % Initialisation de la sortie de la backprop_pooling
+      dL_dinput = zeros(x,y,nb_filtres); % Initialise la sortie de la backprop_pooling
       new_x = fix(x/2);
       new_y = fix(y/2);
       
@@ -73,10 +88,12 @@ classdef MaxPool2 < handle
             amax = obj.last_output(xx,yy,filtre);
             for i=0:1
               for j=0:1
-                % on compare cette sortie précédente à la valeur des pixels qui ont permis de créer la sous région
+                % Compare la sortie du Max-Pooling 
+				% à la valeur des pixels qui ont permis de créer la sous région
                 if obj.last_input(xx*2-i,yy*2-j,filtre) == amax
-                  % Si la valeur du pixel de l'image qui a permis de calculer la sortie précédente, était un maximum dans sa sous région,
-                  % Alors ce pixel a eu un impact pour l'évaluation de la class de l'image.
+                  % Si un pixel de l'image qui a permis de calculer la sortie précédente,
+				  % il était un maximum dans sa sous région,
+                  % Alors ce pixel a eu un impact sur l'incertitude de prédiction.
                   % Donc mettons à jour la dL_dinput
                   dL_dinput(xx*2-i,yy*2-j,filtre) = dL_dout(xx,yy,filtre);
                 end
@@ -85,8 +102,9 @@ classdef MaxPool2 < handle
           end
         end
       end
-      
     end
+%%--------------------------------------------------------------------%%
+	
     %%-Script permet de tester backprop_pooling-%%
     % image(:,:) = [[11,1,2,22];[1,1,2,2];[33,3,44,4];[3,3,4,4]]
     % image(:,:,2) = [[5,55,66,6];[5,5,6,6];[7,7,8,8];[77,7,88,8]]

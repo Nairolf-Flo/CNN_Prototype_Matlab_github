@@ -1,3 +1,6 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fonction pour lire les fichiers contenant la base d'images MNIST %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [ TrainImages, TrainLabels, TestImages, TestLabels ] = mnistread( mnistfilenames )
 
 if( ~exist('mnistfilenames') )
@@ -42,7 +45,6 @@ function images = mnistimageread( imagefile )
         images(i,:) = reshape(img, [1 nrows*ncols]);
     end
 end
-
 
 function labels = mnistlabelread( labelfile )
     fid = fopen( labelfile, 'rb');

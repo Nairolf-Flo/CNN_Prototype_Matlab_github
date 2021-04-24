@@ -23,6 +23,9 @@
 %% Author: flori <flori@LAPTOP-BLEU>
 %% Created: 2020-10-21
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Classe de la couche de Convolution %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 classdef Conv3x3 < handle
   properties (SetAccess = public, GetAccess = public)
     filtres
@@ -32,7 +35,7 @@ classdef Conv3x3 < handle
   
   methods
     
-    %% Création d'une matrice avec les nb_filtres filtres
+    %%-Initialisation des nb_filtres filtres-%%
     function obj=Conv3x3(nb_filtres,bool)
       obj.nombre_filtres=nb_filtres;
       if bool==true
@@ -42,30 +45,32 @@ classdef Conv3x3 < handle
         obj.filtres=Conv1_Filtres;
       end
     end
-    
-    
+    %%---------------------------------------%%
+
+	%%-Convolution entre l'image et les filtres-%%
     function resultat_convolution=forward_convolution(obj,image)
       [h,l,p]=size(image);
-      resultat_convolution=zeros(h-2,l-2,obj.nombre_filtres,p); % Création d'une matrice vide contenant les images après la convolution
+	  % Initialise la matrice résultat
+      resultat_convolution=zeros(h-2,l-2,obj.nombre_filtres,p);
       
-      for pp=1:p % p = 1 si Conv3x3 est la première couche du réseau et que l'image est que sur un canal
+      for pp=1:p % p = 1 si Conv3x3 est la 1ère couche du CNN et que l'image est sur un canal
         for i=1:(h-2)
           for j=1:(l-2)
-            matx=image(i:(i+2), j:(j+2), pp); % isole une région de l'image de dimension 3x3
-            resultat_convolution(i,j,:,pp)=sum(sum(matx.*obj.filtres)); % Convolution de la région par les filtres de la couche Conv3x3
+            matx=image(i:(i+2), j:(j+2), pp); % Isole une région de l'image de dimension 3x3
+            resultat_convolution(i,j,:,pp)=sum(sum(matx.*obj.filtres)); % Convolution
           end
         end
       end
-      
-      obj.last_input = image;   %%  Sauvgarde dans l'objet l'ancienne entrée pour rétroprog
+      % Sauvgarde dans l'objet l'ancienne entrée pour rétropropagation
+      obj.last_input = image; 
       
     end
+	%%------------------------------------------%%
     
-    
+	%%-Rétropropagation du gradient du loss dans la couche de convolution-%%
     function none=backprop_conv(obj,d_L_d_out,learn_rate)
           none=0;
-          d_L_d_filters = zeros(size(obj.filtres)); % Matrice 3x3
-          
+          d_L_d_filters = zeros(size(obj.filtres)); % Initialise une Matrice 3x3
           [h,l,p]=size(obj.last_input);
           
           for pp=1:p % p = nombre de filtres
@@ -76,15 +81,14 @@ classdef Conv3x3 < handle
             end
           end
           
-        % Update filters
-        obj.filtres =obj.filtres - learn_rate * d_L_d_filters;
+        obj.filtres =obj.filtres - learn_rate * d_L_d_filters; % MAJ des filtres
     end
+	%%--------------------------------------------------------------------%%
  end
 end 
   
 %%-Script pour tester le forward_convolution-%%
-%fi = Conv3x3(2)
+%fi = Conv3x3(2,true)
 %A = [[1,1,1,2,2,2];[1,1,1,2,2,2];[1,1,1,2,2,2];[3,3,3,4,4,4];[3,3,3,4,4,4];[3,3,3,4,4,4]]
 %forward_convolution(fi,A)
 %%-------------------------------------------%%
- 

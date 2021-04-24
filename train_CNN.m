@@ -23,17 +23,27 @@
 %% Author: samsa <samsa@LAPTOP-PFAEE1RA>
 %% Created: 2020-10-31
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fonction pour entraîner le réseau à classer des images %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [loss,acc] = train_CNN (Conv,Pool,Softmax,image, label,learn_rate)
-%% L'image est analysée par le réseau CNN
-  [out,loss,acc]=forward_CNN(Conv,Pool,Softmax,image,label);
+	% Conv : nom de la couche de convolution
+	% Pool : nom de la couche de max-pooling
+	% Softmax : nom de la couche de softmax
+	% image : nom de l'image à classer
+	% label : chiffre réellement dessiné sur l'image
+	% learn_rate : valeur du taux d'apprentissage
+	
+	%% L'image est analysée par le CNN
+	[out,loss,acc]=forward_CNN(Conv,Pool,Softmax,image,label);
 
-%% Initialise le gradient
-  gradient = zeros(10,1);
-  gradient(label) = -1 / out(label);
+	%% Initialise le gradient
+	gradient = zeros(10,1); % Vecteur pour clesser l'images parmi 10 catégories
+	gradient(label) = -1 / out(label); 
 
-%% Rétropropagation du gradient à travers les 3 couches du réseau CNN
-  gradient=backprop_softmax(Softmax,gradient,learn_rate);
-  gradient=backprop_pooling(Pool,gradient);
-  gradient=backprop_conv(Conv,gradient,learn_rate);
-  
+	%%-Rétropropagation du gradient à travers les 3 couches du CNN-%%
+	gradient=backprop_softmax(Softmax,gradient,learn_rate);
+	gradient=backprop_pooling(Pool,gradient);
+	gradient=backprop_conv(Conv,gradient,learn_rate);
+	%%-------------------------------------------------------------%%
 end

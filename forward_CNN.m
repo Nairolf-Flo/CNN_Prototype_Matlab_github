@@ -23,21 +23,30 @@
 %% Author: flori <flori@LAPTOP-BLEU> & <@LAPTOP-PFAEE1RA>
 %% Created: 2020-10-27
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fonction pour classer une image %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [out,loss,acc] = forward_CNN (Conv,Pool,Softmax,image, label)
-%% L'image traverse les couches
-  out = forward_convolution(Conv,image);
-  out = forward_pooling(Pool,out);
-  out = forward_softmax(Softmax,out);
+	% Conv : nom de la couche de convolution
+	% Pool : nom de la couche de max-pooling
+	% Softmax : nom de la couche de softmax
+	% image : nom de l'image à classer
+	% label : chiffre réellement dessiné sur l'image
+	
+	%%-L'image traverse les 3 couches-%%
+	out = forward_convolution(Conv,image);
+	out = forward_pooling(Pool,out);
+	out = forward_softmax(Softmax,out);
+	%%--------------------------------%%
   
-%% Calcul du loss 
-  loss=-log(out(label)); % -log(proba(bonne classe de l'image))
+	%% Calcul du loss 
+	loss=-log(out(label)); % -log(proba(bonne classe de l'image))
   
-%% Calcul de acc qui indique si le réseau a bien classé l'image
-  I=find(out==max(out)); % I est le numéro prédit
-  if I==label
-    acc=1;
-  else 
-    acc=0;
-  end
-  
+	%% Calcul de acc qui indique si le réseau a bien classé l'image
+	I=find(out==max(out)); % I est le numéro prédit
+	if I==label
+		acc=1; % La prédiction est juste
+	else 
+		acc=0; % La prédiction est fausse
+	end
 end
