@@ -9,7 +9,7 @@ mnistfilenames{4} = "t10k-labels-idx1-ubyte";
 
 %%-Images à tester-%%
 offs=1;
-N=100; % nombre d'image à tester (Attention c'est vite très long)
+N=10000; % nombre d'image à tester (Attention c'est vite très long)
 tab_label=test_data(offs:N+offs-1); 
 tab_imgr=test_labels(offs:N+offs-1,:,:); % on teste avec N images
 %%-----------------%%
@@ -27,7 +27,7 @@ Softmax1 = Softmax(size(Softmax1_weights)(1),size(Softmax1_weights)(2),false);
 %%-Analyse l'image avec le CNN-%%
 cnt_acc = 0;
 loss = 0;
-for i=offs:N
+for i=offs:N+offs
   label=test_labels(i);	% récupération du label i
   label=label+1;		% map le label entre 1 et 10
   imgr=test_data(i,:,:);	% récupération de l'image i
@@ -38,7 +38,7 @@ for i=offs:N
   
   cnt_acc = cnt_acc + acc;
   loss = loss + l;
-  fprintf("Prédiction %d | Réalité %d \n",find(out==max(out))-1, label-1)
+  %fprintf("Prédiction %d | Réalité %d \n",find(out==max(out))-1, label-1)
 end
 
-fprintf("Taux de succès %d | loss moyen %d\n", (cnt_acc*100) / (N-offs+1), loss / (N-offs+1))
+fprintf("Taux de succès %d | loss moyen %d\n", (cnt_acc*100) / (N+1), loss / (N+1))
