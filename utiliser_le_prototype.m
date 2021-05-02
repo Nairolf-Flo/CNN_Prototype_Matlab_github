@@ -9,7 +9,7 @@ mnistfilenames{4} = "t10k-labels-idx1-ubyte";
 
 %%-Images à tester-%%
 offs=1;
-N=10000; % nombre d'image à tester (Attention c'est vite très long)
+N=100; % nombre d'image à tester (Attention c'est vite très long)
 tab_label=test_data(offs:N+offs-1); 
 tab_imgr=test_labels(offs:N+offs-1,:,:); % on teste avec N images
 %%-----------------%%
@@ -38,7 +38,7 @@ for i=offs:N+offs
   
   cnt_acc = cnt_acc + acc;
   loss = loss + l;
-  %fprintf("Prédiction %d | Réalité %d \n",find(out==max(out))-1, label-1)
+  fprintf("Prédiction %d | Réalité %d \n",find(out==max(out))-1, label-1)
 end
 
 fprintf("Taux de succès %d | loss moyen %d\n", (cnt_acc*100) / (N+1), loss / (N+1))
